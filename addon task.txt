@@ -1,0 +1,1040 @@
+mysql> create table students(
+    -> roll_no int,
+    -> student_name varchar(20),
+    -> department varchar(15));
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> desc students;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| roll_no      | int         | YES  |     | NULL    |       |
+| student_name | varchar(20) | YES  |     | NULL    |       |
+| department   | varchar(15) | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into student_profile values(1,'Nikash','cs'),(2,'abhi','it'),(3,'sathish','bca');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into students values(1,'Nikash','cs'),(2,'abhi','it'),(3,'sathish','bca');
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from students;
++---------+--------------+------------+
+| roll_no | student_name | department |
++---------+--------------+------------+
+|       1 | Nikash       | cs         |
+|       2 | abhi         | it         |
+|       3 | sathish      | bca        |
++---------+--------------+------------+
+3 rows in set (0.00 sec)
+
+mysql> insert into students values (4,'Suba','biotech'),(5,'Sanjay','Bcom');
+Query OK, 2 rows affected (0.03 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from students;
++---------+--------------+------------+
+| roll_no | student_name | department |
++---------+--------------+------------+
+|       1 | Nikash       | cs         |
+|       2 | abhi         | it         |
+|       3 | sathish      | bca        |
+|       4 | Suba         | biotech    |
+|       5 | Sanjay       | Bcom       |
++---------+--------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> update students set course_fee='36500' where rollno='1'
+    -> ;
+ERROR 1054 (42S22): Unknown column 'rollno' in 'where clause'
+mysql> update students set course_fee='36500' where rollno='1';
+ERROR 1054 (42S22): Unknown column 'rollno' in 'where clause'
+mysql> update students set course_fee='36500' where roll_no='1';
+ERROR 1054 (42S22): Unknown column 'course_fee' in 'field list'
+mysql> alter table students add column course_fee int;
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from students;
++---------+--------------+------------+------------+
+| roll_no | student_name | department | course_fee |
++---------+--------------+------------+------------+
+|       1 | Nikash       | cs         |       NULL |
+|       2 | abhi         | it         |       NULL |
+|       3 | sathish      | bca        |       NULL |
+|       4 | Suba         | biotech    |       NULL |
+|       5 | Sanjay       | Bcom       |       NULL |
++---------+--------------+------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> update students set course_fee='36500' where rollno='1';
+ERROR 1054 (42S22): Unknown column 'rollno' in 'where clause'
+mysql> update students set course_fee=36500 where rollno=1;
+ERROR 1054 (42S22): Unknown column 'rollno' in 'where clause'
+mysql> update students set course_fee=36500 where roll_no=';
+    '> ';
+ERROR 1292 (22007): Truncated incorrect DOUBLE value: ';
+'
+mysql> update students set course_fee=36500 where roll_no=1;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> alter table students drop column course_fee;
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> create table course_details(
+    -> dept_id int,
+    -> course_name,
+    -> course_fee;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',
+course_fee' at line 3
+mysql> create table course_details(
+    -> dept_id int,
+    -> course_name varchar(25),
+    -> course_fee int);
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> select * from course_details;
+Empty set (0.00 sec)
+
+mysql> desc course_details
+    -> ;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| dept_id     | int         | YES  |     | NULL    |       |
+| course_name | varchar(25) | YES  |     | NULL    |       |
+| course_fee  | int         | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into course_detils values(
+    -> 1001,'cs',35500),
+    -> (2005,'it',36000),
+    -> (3008,'bca',35000),
+    -> (5006,'biotech',40000),
+    -> (6057,'bcom',36500));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 6
+mysql> insert into course_detils values(
+    -> 1001,'cs',35500),
+    -> (2005,'it',36000),
+    -> (3008,'bca',35000),
+    -> (5006,'biotech',40000),
+    -> (6057,'bcom',36500);
+ERROR 1146 (42S02): Table 'kgcas.course_detils' doesn't exist
+mysql> insert into course_detils values(
+    -> 1001,'cs',35500),
+    -> (2005,'it',36000),
+    -> (3008,'bca',35000),
+    -> (5006,'biotech',40000),
+    -> (6057,'bcom',36500);
+ERROR 1146 (42S02): Table 'kgcas.course_detils' doesn't exist
+mysql> insert into course_details values(
+    -> 1001,'cs',35500),
+    -> (2005,'it',36000),
+    -> (3008,'bca',35000),
+    -> (5006,'biotech',40000),
+    -> (6057,'bcom',36500);
+Query OK, 5 rows affected (0.04 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from course_details;
++---------+-------------+------------+
+| dept_id | course_name | course_fee |
++---------+-------------+------------+
+|    1001 | cs          |      35500 |
+|    2005 | it          |      36000 |
+|    3008 | bca         |      35000 |
+|    5006 | biotech     |      40000 |
+|    6057 | bcom        |      36500 |
++---------+-------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> alter table students drop column department;
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table students add column dept_id int;
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from students;
++---------+--------------+---------+
+| roll_no | student_name | dept_id |
++---------+--------------+---------+
+|       1 | Nikash       |    NULL |
+|       2 | abhi         |    NULL |
+|       3 | sathish      |    NULL |
+|       4 | Suba         |    NULL |
+|       5 | Sanjay       |    NULL |
++---------+--------------+---------+
+5 rows in set (0.00 sec)
+
+mysql> update students set dept_id=1001 where roll_no=1;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from students;
++---------+--------------+---------+
+| roll_no | student_name | dept_id |
++---------+--------------+---------+
+|       1 | Nikash       |    1001 |
+|       2 | abhi         |    NULL |
+|       3 | sathish      |    NULL |
+|       4 | Suba         |    NULL |
+|       5 | Sanjay       |    NULL |
++---------+--------------+---------+
+5 rows in set (0.00 sec)
+
+mysql> update students set dept_id=2005 where roll_no=2;
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update students set dept_id=3008 where roll_no=3;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update students set dept_id=5006 where roll_no=4;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update students set dept_id=6057 where roll_no=5;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from students;
++---------+--------------+---------+
+| roll_no | student_name | dept_id |
++---------+--------------+---------+
+|       1 | Nikash       |    1001 |
+|       2 | abhi         |    2005 |
+|       3 | sathish      |    3008 |
+|       4 | Suba         |    5006 |
+|       5 | Sanjay       |    6057 |
++---------+--------------+---------+
+5 rows in set (0.00 sec)
+
+create table slibrary(
+    -> stname varchar(10),
+    -> rollno int,
+    -> dep varchar(50));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into slibrary('suba',49,'it'),('sanjay',38,'it'),('nik',25,'it');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''suba',49,'it'),('sanjay',38,'it'),('nik',25,'it')' at line 1
+mysql> insert into slibrary values('suba',49,'it'),('sanjay',38,'it'),('nik',25,'it');
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from slibrary;
++--------+--------+------+
+| stname | rollno | dep  |
++--------+--------+------+
+| suba   |     49 | it   |
+| sanjay |     38 | it   |
+| nik    |     25 | it   |
++--------+--------+------+
+3 rows in set (0.00 sec)
+
+mysql> create table blibrary(
+    -> bookid int,
+    -> bookname varchar(50),\
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 4
+mysql> create table blibrary(
+    -> bookid int,
+    -> bookname varchar(50),
+    -> booktype varchar(30));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into blibrary values(102030,'atomic habits','self-help category'),(11244,'War and Peace,'historical fiction'),(342441,'Ulysses','novel');
+    '>
+    '> ;
+    '> );
+    '> insert into blibrary values(102030,'atomic habits','self-help category'),(11244,'War and Peace,'historical fiction'),(342441,'Ulysses','novel');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'historical fiction'),(342441,'Ulysses','novel');
+
+;
+);
+insert into blibrary valu' at line 1
+mysql> insert into blibrary values(102030,'atomic habits','self-help category'),(11244,'War and Peace','historical fiction'),(342441,'Ulysses','novel');
+Query OK, 3 rows affected (0.00 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from blibrary;
++--------+---------------+--------------------+
+| bookid | bookname      | booktype           |
++--------+---------------+--------------------+
+| 102030 | atomic habits | self-help category |
+|  11244 | War and Peace | historical fiction |
+| 342441 | Ulysses       | novel              |
++--------+---------------+--------------------+
+3 rows in set (0.00 sec)
+
+mysql> create table tlibrary(
+    -> bookid int;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 2
+mysql> create table tlibrary(
+    -> bookid int,
+    -> duedate date,
+    -> returndate date);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into tlibrary values(102030,'2025-06-16','2025-06-26'),(11244,'2025-06-20','2025-06-30'),(342441,'2025-06-06','2025-06-16');
+Query OK, 3 rows affected (0.00 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from tlibrary;
++--------+------------+------------+
+| bookid | duedate    | returndate |
++--------+------------+------------+
+| 102030 | 2025-06-16 | 2025-06-26 |
+|  11244 | 2025-06-20 | 2025-06-30 |
+| 342441 | 2025-06-06 | 2025-06-16 |
++--------+------------+------------+
+3 rows in set (0.00 sec)
+day 6 task
+import java.util.HashSet;
+
+import java.util.Scanner;
+
+
+
+public class UniqueEmailsFixed {
+
+    public static void main(String[] args) {
+
+        HashSet<String> emailSet = new HashSet<>();
+
+        Scanner sc = new Scanner(System.in);
+
+
+
+        System.out.print("How many email addresses you want to enter? ");
+
+        int count = sc.nextInt();
+
+        sc.nextLine();
+
+
+        for (int i = 0; i < count; i++) {
+
+            System.out.print("Enter email " + (i + 1) + ": ");
+
+            String email = sc.nextLine();
+
+
+
+            if (emailSet.add(email)) {
+
+                System.out.println("Email added.");
+
+            } else {
+
+                System.out.println("Duplicate email. Not added.");
+
+            }
+2)
+package coursepack;
+
+
+
+import java.util.HashMap;
+
+import java.util.Scanner;
+
+
+
+public class StudentMarksAverage {
+
+    public static void main(String[] args) {
+
+        HashMap<String, Integer> studentMarks = new HashMap<>();
+
+        Scanner sc = new Scanner(System.in);
+
+
+
+        System.out.print("Enter number of students: ");
+
+        int count = sc.nextInt();
+
+        sc.nextLine();
+
+
+        for (int i = 0; i < count; i++) {
+
+            System.out.print("Enter student name: ");
+
+            String name = sc.nextLine();
+
+
+
+            System.out.print("Enter marks for " + name + ": ");
+
+            int marks = sc.nextInt();
+
+            sc.nextLine(); // consume newline
+
+
+
+            studentMarks.put(name, marks);
+
+        }
+
+
+
+   
+
+        int total = 0;
+
+        for (int marks : studentMarks.values()) {
+
+            total += marks;
+
+        }
+
+
+
+        double average = (double) total / studentMarks.size();
+
+
+
+
+
+        System.out.println("\nStudent Marks:");
+
+        for (String name : studentMarks.keySet()) {
+
+            System.out.println(name + " -> " + studentMarks.get(name));
+
+        }
+
+
+
+        System.out.println("\nAverage Marks: " + average);
+
+
+
+        sc.close();
+
+    }
+
+}
+
+3)
+package coursepack;
+
+
+
+class MyThread extends Thread {
+
+    @Override
+
+    public void run() {
+
+        for (int i = 1; i <= 10; i++) {
+
+            System.out.println("Thread: " + i);
+
+        }
+
+    }
+
+}
+
+
+
+public class threadoh {
+
+    public static void main(String[] args) {
+
+        MyThread thread = new MyThread();
+
+        thread.start();
+
+    }
+
+}
+
+        }
+
+
+
+        System.out.println("\nUnique email addresses:");
+
+        for (String email : emailSet) {
+
+            System.out.println(email);
+
+        }
+
+
+
+        sc.close();
+
+    }
+
+
+
+
+
+
+
+}
+import java.util.*;
+
+class Main {
+    public static void main(String[] args) {
+        try {
+            int a = 10 / 0;
+            String str = null;
+            System.out.println(str.length());
+        }
+        catch (ArithmeticException ae) {
+            System.out.println(
+                "Caught ArithmeticException: " + ae);
+        }
+        catch (NullPointerException ae) {
+            System.out.println(
+                "Caught NullPointerException: " + ae);
+        }
+    }
+}
+
+OUTPUT:
+Caught ArithmeticException: java.lang.ArithmeticException: / by zero
+  -----------------------------------------------------------------------
+  package oops.ExceptionHandling;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+
+public class SimpleFileReader {
+    public static void main(String[] args) {
+        String filePath = "C:\\Users\\casstudent\\Desktop\\addon java";
+        File file = new File(filePath);
+
+        if (file.exists()) {
+            try {
+                String content = new String(Files.readAllBytes(file.toPath()));
+                System.out.println(content);
+            } catch (IOException e) {
+                System.out.println("Error reading the file.");
+            }
+        } else {
+            System.out.println("File not found: " + filePath);
+        }
+    }
+}
+
+OUTPUT:
+Error reading the file.
+  -----------------------------------------------------------------------------------
+  READ TEXT FILE:
+  package oops.ExceptionHandling;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+public class FileReader {
+    public static void main(String[] args) {
+        File file = new File("C:\\Users\\casstudent\\eclipse-workspace\\Javaprograms\\src\\oops\\ExceptionHandling\\n.txt");
+
+        try (Scanner reader = new Scanner(file)) {
+            while (reader.hasNextLine()) {
+                System.out.println(reader.nextLine());
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found!");
+        }
+    }
+}
+
+OUTPUT:
+hi
+--------------------------------------------------------------------------------------------
+  WRITE TEXT FILE:
+package oops.ExceptionHandling;
+
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class FileWriterPro {
+    public static void main(String[] args) {
+        try (FileWriter writer = new FileWriter("C:\\Users\\casstudent\\eclipse-workspace\\Javaprograms\\src\\oops\\ExceptionHandling\\n.txt")) {
+            writer.write("Line 1\nLine 2\nLine 3\n");
+            System.out.println("File written successfully.");
+        } catch (IOException e) {
+            System.out.println("Error writing to file.");
+        }
+    }
+}
+
+OUTPUT:
+File written successfully.
+--------------------------------------------------------------------------------------------
+import java.util.Scanner;
+class Person {
+    String name;
+    int age;
+    void getDetails(Scanner sc)
+    {
+        System.out.print("Enter name: ");
+        name = sc.nextLine();
+        System.out.print("Enter age: ");
+        age = sc.nextInt();
+    }
+
+    void showDetails()
+    {
+        System.out.println("Name: " + name);
+        System.out.println("Age: " + age);
+    }
+}
+
+
+class Employee extends Person {
+    double basicSalary;
+    double hra;
+    double da;
+
+    void setSalary(Scanner sc) {
+        System.out.print("Enter basic salary: ");
+        basicSalary = sc.nextDouble();
+
+        hra = 0.2 * basicSalary;
+        da = 0.1 * basicSalary;
+    }
+
+    double calculateSalary() {
+        return basicSalary + hra + da;
+    }
+
+    void displaySalary() {
+        System.out.println("Total Salary: ₹" + calculateSalary());
+    }
+}
+
+public class SalaryDemo {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        Employee emp = new Employee();
+        emp.getDetails(sc);
+        emp.setSalary(sc);
+        System.out.println("\nEmployee Details:");
+        emp.showDetails();
+        emp.displaySalary();
+
+        sc.close();
+    }
+}
+
+OUTPUT:
+Enter name: sanjith
+Enter age: 20
+Enter basic salary: 1200001
+
+Employee Details:
+Name: sanjith
+Age: 20
+Total Salary: ₹1560001.3
+-------------------------------------------------------------
+import java.util.Scanner;
+
+class Student {
+    String name;
+    int rollNo;
+    int mark1, mark2, mark3;
+
+
+    void getDetails() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter student name: ");
+        name = sc.nextLine();
+
+        System.out.print("Enter roll number: ");
+        rollNo = sc.nextInt();
+
+        System.out.print("Enter mark 1: ");
+        mark1 = sc.nextInt();
+
+        System.out.print("Enter mark 2: ");
+        mark2 = sc.nextInt();
+
+        System.out.print("Enter mark 3: ");
+        mark3 = sc.nextInt();
+    }
+
+   
+    void displayResult() {
+        int total = mark1 + mark2 + mark3;
+        float average = total / 3f;
+
+        System.out.println("\n--- Student Result ---");
+        System.out.println("Name: " + name);
+        System.out.println("Roll No: " + rollNo);
+        System.out.println("Marks: " + mark1 + ", " + mark2 + ", " + mark3);
+        System.out.println("Total: " + total);
+        System.out.println("Average: " + average);
+
+        if (average >= 50) {
+            System.out.println("Result: Pass");
+        } else {
+            System.out.println("Result: Fail");
+        }
+    }
+}
+
+public class StudentManagement {
+    public static void main(String[] args) {
+        Student s1 = new Student();
+        s1.getDetails();
+        s1.displayResult();
+    }
+}
+
+Output:
+Enter student name: sanjith
+Enter roll number: 25
+Enter mark 1: 70
+Enter mark 2: 65
+Enter mark 3: 80
+
+--- Student Result ---
+Name: sanjith
+Roll No: 25
+Marks: 70, 65, 80
+Total: 215
+Average: 71.666664
+Result: Pass
+
+--------------------------------------------------------
+Method OverLoading
+class Sum {
+    int multiply(int a, int b) {
+        return a * b;
+    }
+
+    double multiply(double a, double b) {
+        return a * b;
+    }
+
+   
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Sum s1 = new Sum();
+        System.out.println(s1.multiply(2, 3));          
+        System.out.println(s1.multiply(2.5, 3.5));      
+       
+    }
+}
+OUTPUT:
+6
+8.75
+-----------------------------------------------------------
+Using Scanner:
+class Sum {
+    int multiply( int a,int b) {
+        return a * b;
+    }
+
+    double multiply(double a1, double b1) {
+         return a1 * b1;
+     }
+
+   
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Sum s1 = new Sum();
+        
+        Scanner sc=new Scanner(System.in);
+        System.out.println("Enter the Value1:");
+        int a=sc.nextInt();
+        System.out.println("Enter the value2:");  
+        int b=sc.nextInt();
+        System.out.println("The Multiplied Integer Values Are:"  + s1.multiply(a,b)); 
+        System.out.println("Enter the Value1:");
+        double a1=sc.nextDouble();
+        System.out.println("Enter the value2:");  
+        double b1=sc.nextDouble();
+        System.out.println("The Multiplied Double Values Are:"  + s1.multiply(a1,b1));
+     sc.close();
+       
+    }
+}
+OUTPUT:
+Enter the Value1:
+
+2
+Enter the value2:
+2
+The Multiplied Integer Values Are:4
+Enter the Value1:
+3
+Enter the value2:
+3.5
+The Multiplied Double Values Are:10.5
+import java.util.Scanner;
+
+class BankAccount {
+    double balance = 0;
+
+    void deposit(double amount) {
+        balance += amount;
+        System.out.println("Deposited: ₹" + amount);
+    }
+
+    void withdraw(double amount) {
+        if (amount <= balance) {
+            balance -= amount;
+            System.out.println("Withdrawn: ₹" + amount);
+        } else {
+            System.out.println("Not enough balance!");
+        }
+    }
+
+    void showBalance() {
+        System.out.println("Balance: ₹" + balance);
+    }
+}
+
+public class Bank {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        BankAccount account = new BankAccount();
+
+        System.out.print("Enter deposit amount: ");
+        double dep = sc.nextDouble();
+        account.deposit(dep);
+
+        System.out.print("Enter withdraw amount: ");
+        double wd = sc.nextDouble();
+        account.withdraw(wd);
+
+        account.showBalance();
+    }
+}
+
+OUTPUT:
+Enter deposit amount: 20000
+Deposited: ₹20000.0
+Enter withdraw amount: 500
+Withdrawn: ₹500.0
+Balance: ₹19500.0
+day 2 (TASK)
+1)class Main {
+    public static void main(String[] args) {
+        String str = "morning";
+        String vowels = "";
+        String consonants = "";
+
+        for (int i = 0; i < str.length(); i++) {
+            char ch = str.charAt(i);
+            
+            if (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u') {
+                vowels += ch;
+            } else {
+                consonants += ch;
+            }
+        }
+
+        System.out.println("Vowels: " + vowels);
+        System.out.println("Consonants: " + consonants);
+    }
+} 
+output: Vowels: oi
+Consonants: mrnng
+
+2)public class Main {
+    public static void main(String[] args) {
+        int[] arr = {10, 20, 30, 40, 50};
+        int n = arr.length;
+
+        for (int i = n - 1; i >= 0; i--) {
+            System.out.print(arr[i] + " ");
+        }
+    }
+}
+
+output:50 40 30 20 10 
+
+3)import java.util.Scanner;
+class Main {
+    public static void main(String[] args) {
+      String str="I Love Zoho";
+      String str1[]=str.split(" ");
+      System.out.println(str1[0]);
+      for(int i=str1.length-1;i>=0;i--)
+      {
+          System.out.print(str1[i]+" ");
+      }
+    }
+}
+
+Output:
+
+Zoho Love I
+elseif condition using && operator
+public class Main
+{
+public static void main(String[] args) {
+int age=16;
+if(age>16)
+{
+       System.out.println("valid");
+}
+else if(age<16)
+{
+   System.out.print("invalid");
+}
+else
+{
+   System.out.println("Age is 16");
+}
+}
+}
+
+Output:
+Age is 16
+-------------------------
+public class Main
+{
+public static void main(String[] args) {
+int age=19;
+String gender="female";
+if(age>=21 && gender=="female")
+{
+       System.out.println("Eligible for female");
+}
+else if(age>=23 && gender=="male")
+{
+   System.out.print("Eligible for male");
+}
+else
+{
+   System.out.println("Not eligible");
+}
+}
+}
+
+Output:
+Not eligible
+--------------------------------------------------------------
+
+elseif condition using || operator
+public class Main
+{
+public static void main(String[] args) {
+int age=18;
+String gender="female";
+if(age>16 || gender=="female")
+{
+       System.out.println("Ticket is free");
+}
+else
+{
+   System.out.println("Ticket is not free");
+}
+}
+}
+
+Output:
+Ticket is free
+----------------------------------------------------------------------
+
+Using Switch Case:
+public class Main
+{
+public static void main(String[] args) {
+int age=18;
+String gender="male";
+if(age<18 || gender=="female")
+{
+       System.out.println("Ticket is free");
+}
+else
+{
+   int km=15;
+   switch(km){
+       case :{
+           System.out.println("Rupees 50");
+           break;
+       }
+       case 10:{
+           System.out.println("Rupees 100");
+           break;
+       }
+       default:{
+           System.out.println("Not Applicable");
+       }
+}
+}
+}
+}
+
+Output:
+Not Applicable
+------------------------------------------------------------
+
+Using do while
+public class Main
+{
+public static void main(String[] args) {
+   int i=5;
+   do
+   {
+       System.out.println(i);
+       i++;
+   }
+   while(i<5);
+}
+}
+
+Output:
+5
+
+------------------------------------------------------
+Methods:
+return type without static
+
+public class Main
+{
+    int myMethod(int a,int b)
+    {
+        return a+b;
+    }
+public static void main(String[] args) {
+  Main m=new Main();
+  System.out.print(m.myMethod(5,10));
+}
+}
+
+Output:
+15
+----------------------------
+with static
+public class Main
+{
+    static int myMethod(int a,int b)
+    {
+        return a+b;
+    }
+public static void main(String[] args) {
+
+  System.out.print(myMethod(5,10));
+}
+}
+
+Output
+55
