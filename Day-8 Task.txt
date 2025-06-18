@@ -1,0 +1,366 @@
+mysql> use mydatab;
+Database changed
+mysql> create table student_details(
+    -> name varchar(10),
+    -> rollno int,
+    -> subject varchar(15),
+    -> department varchar(20));
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select * from student_details;
+Empty set (0.00 sec)
+
+mysql> desc student_details;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| name       | varchar(10) | YES  |     | NULL    |       |
+| rollno     | int(11)     | YES  |     | NULL    |       |
+| subject    | varchar(15) | YES  |     | NULL    |       |
+| department | varchar(20) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into student_details values('dharani',1,'java','IT');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from student_details;
++---------+--------+---------+------------+
+| name    | rollno | subject | department |
++---------+--------+---------+------------+
+| dharani |      1 | java    | IT         |
++---------+--------+---------+------------+
+1 row in set (0.00 sec)
+
+mysql> insert into student_details values('janani',2,'c++','ct');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student_details values('reha',2,'linux','CS');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student_details values('srimathi',2,'wda','BCA');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student_details values('sana',5,'dfa','IT');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from student_details;
++----------+--------+---------+------------+
+| name     | rollno | subject | department |
++----------+--------+---------+------------+
+| dharani  |      1 | java    | IT         |
+| janani   |      2 | c++     | ct         |
+| reha     |      2 | linux   | CS         |
+| srimathi |      2 | wda     | BCA        |
+| sana     |      5 | dfa     | IT         |
++----------+--------+---------+------------+
+5 rows in set (0.00 sec)
+
+mysql> update student_details set rollno ='3'
+    -> where reha = 3;
+ERROR 1054 (42S22): Unknown column 'reha' in 'where clause'
+mysql> update student_details set rollno =3
+    -> where reha = 3;
+ERROR 1054 (42S22): Unknown column 'reha' in 'where clause'
+mysql> update student_details set rollno ='3'
+    -> where name='reha';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update student_details set rollno ='4'
+    -> where name='srimathi';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from student_details;
++----------+--------+---------+------------+
+| name     | rollno | subject | department |
++----------+--------+---------+------------+
+| dharani  |      1 | java    | IT         |
+| janani   |      2 | c++     | ct         |
+| reha     |      3 | linux   | CS         |
+| srimathi |      4 | wda     | BCA        |
+| sana     |      5 | dfa     | IT         |
++----------+--------+---------+------------+
+5 rows in set (0.00 sec)
+
+mysql> create table subject(
+    -> roll_no int,
+    -> subject varchar(20));
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> insert into subject values( 1,'tamil');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into subject values( 2,'english');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from subject;
++---------+---------+
+| roll_no | subject |
++---------+---------+
+|       1 | tamil   |
+|       2 | english |
++---------+---------+
+2 rows in set (0.00 sec)
+
+mysql> alter table student_details drop column rollno;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from student_details;
++----------+---------+------------+
+| name     | subject | department |
++----------+---------+------------+
+| dharani  | java    | IT         |
+| janani   | c++     | ct         |
+| reha     | linux   | CS         |
+| srimathi | wda     | BCA        |
+| sana     | dfa     | IT         |
++----------+---------+------------+
+5 rows in set (0.00 sec)
+
+mysql> alter table student_details drop column subject;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from student_details;
++----------+------------+
+| name     | department |
++----------+------------+
+| dharani  | IT         |
+| janani   | ct         |
+| reha     | CS         |
+| srimathi | BCA        |
+| sana     | IT         |
++----------+------------+
+5 rows in set (0.00 sec)
+
+mysql> create table department(
+    -> dept_id int,
+    -> dept_name varcher(25),
+    -> HOD_name varchar(25));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '(25),
+HOD_name varchar(25))' at line 3
+mysql> create table department(
+    -> dept_id int,
+    -> dept_name varchar(25),
+    -> HOD_name varchar(25));
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> insert into department values
+    -> (1,'computer science'),
+    -> (2,'information technology'),
+    -> (1,'computer science','padhmavathy');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into department values
+    -> (1,'computer science','padhuu'),
+    -> (2,'information technology','vijiya'),
+    -> (3,'computer technology','usha');
+Query OK, 3 rows affected (0.00 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from department;
++---------+------------------------+----------+
+| dept_id | dept_name              | HOD_name |
++---------+------------------------+----------+
+|       1 | computer science       | padhuu   |
+|       2 | information technology | vijiya   |
+|       3 | computer technology    | usha     |
++---------+------------------------+----------+
+3 rows in set (0.00 sec)
+
+mysql> alter table department add name;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1
+mysql> alter table student_details add rollno;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1
+mysql> alter table department add rollno;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1
+mysql> alter table department add rollno int;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from department;
++---------+------------------------+----------+--------+
+| dept_id | dept_name              | HOD_name | rollno |
++---------+------------------------+----------+--------+
+|       1 | computer science       | padhuu   |   NULL |
+|       2 | information technology | vijiya   |   NULL |
+|       3 | computer technology    | usha     |   NULL |
++---------+------------------------+----------+--------+
+3 rows in set (0.00 sec)
+
+mysql> update department set rollno=111
+    -> where dept_id=1;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update department set rollno=222
+    -> where dept_id=2;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update department set rollno=333
+    -> where dept_id=3;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from department;
++---------+------------------------+----------+--------+
+| dept_id | dept_name              | HOD_name | rollno |
++---------+------------------------+----------+--------+
+|       1 | computer science       | padhuu   |    111 |
+|       2 | information technology | vijiya   |    222 |
+|       3 | computer technology    | usha     |    333 |
++---------+------------------------+----------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select * from studentdetails where rollno=222;
+ERROR 1146 (42S02): Table 'mydatab.studentdetails' doesn't exist
+mysql> select * from department where rollno=222;
++---------+------------------------+----------+--------+
+| dept_id | dept_name              | HOD_name | rollno |
++---------+------------------------+----------+--------+
+|       2 | information technology | vijiya   |    222 |
++---------+------------------------+----------+--------+
+1 row in set (0.00 sec)
+
+mysql> select * from department order by deptid desc;
+ERROR 1054 (42S22): Unknown column 'deptid' in 'order clause'
+mysql> select * from department order by dept_id desc;
++---------+------------------------+----------+--------+
+| dept_id | dept_name              | HOD_name | rollno |
++---------+------------------------+----------+--------+
+|       3 | computer technology    | usha     |    333 |
+|       2 | information technology | vijiya   |    222 |
+|       1 | computer science       | padhuu   |    111 |
++---------+------------------------+----------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select * from department limit 2;
++---------+------------------------+----------+--------+
+| dept_id | dept_name              | HOD_name | rollno |
++---------+------------------------+----------+--------+
+|       1 | computer science       | padhuu   |    111 |
+|       2 | information technology | vijiya   |    222 |
++---------+------------------------+----------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from department limit 1 offset 2;
++---------+---------------------+----------+--------+
+| dept_id | dept_name           | HOD_name | rollno |
++---------+---------------------+----------+--------+
+|       3 | computer technology | usha     |    333 |
++---------+---------------------+----------+--------+
+1 row in set (0.00 sec)
+
+mysql> select top 3 * from department;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '3 * from department' at line 1
+mysql> alter table department add name;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1
+mysql> alter table department add name varchar(20);
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> update department set name='sasmi' where dep_id=1;
+ERROR 1054 (42S22): Unknown column 'dep_id' in 'where clause'
+mysql> update department set name='sasmi' where dept_id=1;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update department set name='sasmi' where dept_id=2;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update department set name='srii' where dept_id=3;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from department;
++---------+------------------------+----------+--------+-------+
+| dept_id | dept_name              | HOD_name | rollno | name  |
++---------+------------------------+----------+--------+-------+
+|       1 | computer science       | padhuu   |    111 | sasmi |
+|       2 | information technology | vijiya   |    222 | sasmi |
+|       3 | computer technology    | usha     |    333 | srii  |
++---------+------------------------+----------+--------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select distinct * from department;
++---------+------------------------+----------+--------+-------+
+| dept_id | dept_name              | HOD_name | rollno | name  |
++---------+------------------------+----------+--------+-------+
+|       1 | computer science       | padhuu   |    111 | sasmi |
+|       2 | information technology | vijiya   |    222 | sasmi |
+|       3 | computer technology    | usha     |    333 | srii  |
++---------+------------------------+----------+--------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select distinct * from department where dept_id=2 or dept_id=3;
++---------+------------------------+----------+--------+-------+
+| dept_id | dept_name              | HOD_name | rollno | name  |
++---------+------------------------+----------+--------+-------+
+|       2 | information technology | vijiya   |    222 | sasmi |
+|       3 | computer technology    | usha     |    333 | srii  |
++---------+------------------------+----------+--------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select distinct * from department where dept_id between 1 and 3;
++---------+------------------------+----------+--------+-------+
+| dept_id | dept_name              | HOD_name | rollno | name  |
++---------+------------------------+----------+--------+-------+
+|       1 | computer science       | padhuu   |    111 | sasmi |
+|       2 | information technology | vijiya   |    222 | sasmi |
+|       3 | computer technology    | usha     |    333 | srii  |
++---------+------------------------+----------+--------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select rollno as studid, name as studname from department;
++--------+----------+
+| studid | studname |
++--------+----------+
+|    111 | sasmi    |
+|    222 | sasmi    |
+|    333 | srii     |
++--------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select distinct * from department where name like '%a%';
++---------+------------------------+----------+--------+-------+
+| dept_id | dept_name              | HOD_name | rollno | name  |
++---------+------------------------+----------+--------+-------+
+|       1 | computer science       | padhuu   |    111 | sasmi |
+|       2 | information technology | vijiya   |    222 | sasmi |
++---------+------------------------+----------+--------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select distinct * from department where name like '%a';
+Empty set (0.00 sec)
+
+mysql> select distinct * from department where name like '_a%';
++---------+------------------------+----------+--------+-------+
+| dept_id | dept_name              | HOD_name | rollno | name  |
++---------+------------------------+----------+--------+-------+
+|       1 | computer science       | padhuu   |    111 | sasmi |
+|       2 | information technology | vijiya   |    222 | sasmi |
++---------+------------------------+----------+--------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select distinct * from department where name like '__a%';
+Empty set (0.00 sec)
+
+mysql> select distinct * from department where name like '%i%;
+    '> 
+    '> select distinct * from department where name like '%i%;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1
+mysql> select distinct * from department where name like '%i%';
++---------+------------------------+----------+--------+-------+
+| dept_id | dept_name              | HOD_name | rollno | name  |
++---------+------------------------+----------+--------+-------+
+|       1 | computer science       | padhuu   |    111 | sasmi |
+|       2 | information technology | vijiya   |    222 | sasmi |
+|       3 | computer technology    | usha     |    333 | srii  |
++---------+------------------------+----------+--------+-------+
+3 rows in set (0.00 sec)
+
+mysql> notee
